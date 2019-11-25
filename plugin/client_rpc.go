@@ -34,10 +34,17 @@ type hooksRPCClient struct {
 	implemented [TotalHooksId]bool
 }
 
-type hooksRPCServer struct {
+type HooksRPCServer struct {
 	impl         interface{}
 	muxBroker    *plugin.MuxBroker
 	apiRPCClient *apiRPCClient
+}
+
+func NewHooksRPCServer(muxBroker *plugin.MuxBroker, impl interface{}) *HooksRPCServer {
+	return &HooksRPCServer{
+		muxBroker: muxBroker,
+		impl:      impl,
+	}
 }
 
 // Implements hashicorp/go-plugin/plugin.Plugin interface to connect the hooks of a plugin
@@ -48,7 +55,7 @@ type hooksPlugin struct {
 }
 
 func (p *hooksPlugin) Server(b *plugin.MuxBroker) (interface{}, error) {
-	return &hooksRPCServer{impl: p.hooks, muxBroker: b}, nil
+	return &HooksRPCServer{impl: p.hooks, muxBroker: b}, nil
 }
 
 func (p *hooksPlugin) Client(b *plugin.MuxBroker, client *rpc.Client) (interface{}, error) {
@@ -122,7 +129,7 @@ func (g *hooksRPCClient) Implemented() (impl []string, err error) {
 }
 
 // Implemented replies with the names of the hooks that are implemented.
-func (s *hooksRPCServer) Implemented(args struct{}, reply *[]string) error {
+func (s *HooksRPCServer) Implemented(args struct{}, reply *[]string) error {
 	ifaceType := reflect.TypeOf((*Hooks)(nil)).Elem()
 	implType := reflect.TypeOf(s.impl)
 	selfType := reflect.TypeOf(s)
@@ -188,7 +195,7 @@ func (g *hooksRPCClient) OnActivate() error {
 	return _returns.A
 }
 
-func (s *hooksRPCServer) OnActivate(args *Z_OnActivateArgs, returns *Z_OnActivateReturns) error {
+func (s *HooksRPCServer) OnActivate(args *Z_OnActivateArgs, returns *Z_OnActivateReturns) error {
 	connection, err := s.muxBroker.Dial(args.APIMuxId)
 	if err != nil {
 		return err
@@ -334,7 +341,7 @@ func (g *hooksRPCClient) ServeHTTP(c *Context, w http.ResponseWriter, r *http.Re
 	}
 }
 
-func (s *hooksRPCServer) ServeHTTP(args *Z_ServeHTTPArgs, returns *struct{}) error {
+func (s *HooksRPCServer) ServeHTTP(args *Z_ServeHTTPArgs, returns *struct{}) error {
 	connection, err := s.muxBroker.Dial(args.ResponseWriterStream)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "[ERROR] Can't connect to remote response writer stream, error: %v", err.Error())
@@ -497,7 +504,7 @@ func (g *hooksRPCClient) FileWillBeUploaded(c *Context, info *model.FileInfo, fi
 	return _returns.A, _returns.B
 }
 
-func (s *hooksRPCServer) FileWillBeUploaded(args *Z_FileWillBeUploadedArgs, returns *Z_FileWillBeUploadedReturns) error {
+func (s *HooksRPCServer) FileWillBeUploaded(args *Z_FileWillBeUploadedArgs, returns *Z_FileWillBeUploadedReturns) error {
 	uploadFileConnection, err := s.muxBroker.Dial(args.UploadedFileStream)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "[ERROR] Can't connect to remote upload file stream, error: %v", err.Error())
@@ -553,7 +560,7 @@ func (g *hooksRPCClient) MessageWillBePosted(c *Context, post *model.Post) (*mod
 	return _returns.A, _returns.B
 }
 
-func (s *hooksRPCServer) MessageWillBePosted(args *Z_MessageWillBePostedArgs, returns *Z_MessageWillBePostedReturns) error {
+func (s *HooksRPCServer) MessageWillBePosted(args *Z_MessageWillBePostedArgs, returns *Z_MessageWillBePostedReturns) error {
 	if hook, ok := s.impl.(interface {
 		MessageWillBePosted(c *Context, post *model.Post) (*model.Post, string)
 	}); ok {
@@ -594,7 +601,7 @@ func (g *hooksRPCClient) MessageWillBeUpdated(c *Context, newPost, oldPost *mode
 	return _returns.A, _returns.B
 }
 
-func (s *hooksRPCServer) MessageWillBeUpdated(args *Z_MessageWillBeUpdatedArgs, returns *Z_MessageWillBeUpdatedReturns) error {
+func (s *HooksRPCServer) MessageWillBeUpdated(args *Z_MessageWillBeUpdatedArgs, returns *Z_MessageWillBeUpdatedReturns) error {
 	if hook, ok := s.impl.(interface {
 		MessageWillBeUpdated(c *Context, newPost, oldPost *model.Post) (*model.Post, string)
 	}); ok {

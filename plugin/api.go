@@ -922,7 +922,7 @@ type API interface {
 	PluginHTTP(request *http.Request) *http.Response
 }
 
-var handshake = plugin.HandshakeConfig{
+var Handshake = plugin.HandshakeConfig{
 	ProtocolVersion:  1,
 	MagicCookieKey:   "MATTERMOST_PLUGIN",
 	MagicCookieValue: "Securely message teams, anywhere.",

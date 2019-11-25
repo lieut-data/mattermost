@@ -37,7 +37,7 @@ func (g *hooksRPCClient) OnDeactivate() error {
 	return _returns.A
 }
 
-func (s *hooksRPCServer) OnDeactivate(args *Z_OnDeactivateArgs, returns *Z_OnDeactivateReturns) error {
+func (s *HooksRPCServer) OnDeactivate(args *Z_OnDeactivateArgs, returns *Z_OnDeactivateReturns) error {
 	if hook, ok := s.impl.(interface {
 		OnDeactivate() error
 	}); ok {
@@ -71,7 +71,7 @@ func (g *hooksRPCClient) OnConfigurationChange() error {
 	return _returns.A
 }
 
-func (s *hooksRPCServer) OnConfigurationChange(args *Z_OnConfigurationChangeArgs, returns *Z_OnConfigurationChangeReturns) error {
+func (s *HooksRPCServer) OnConfigurationChange(args *Z_OnConfigurationChangeArgs, returns *Z_OnConfigurationChangeReturns) error {
 	if hook, ok := s.impl.(interface {
 		OnConfigurationChange() error
 	}); ok {
@@ -108,7 +108,7 @@ func (g *hooksRPCClient) ExecuteCommand(c *Context, args *model.CommandArgs) (*m
 	return _returns.A, _returns.B
 }
 
-func (s *hooksRPCServer) ExecuteCommand(args *Z_ExecuteCommandArgs, returns *Z_ExecuteCommandReturns) error {
+func (s *HooksRPCServer) ExecuteCommand(args *Z_ExecuteCommandArgs, returns *Z_ExecuteCommandReturns) error {
 	if hook, ok := s.impl.(interface {
 		ExecuteCommand(c *Context, args *model.CommandArgs) (*model.CommandResponse, *model.AppError)
 	}); ok {
@@ -143,7 +143,7 @@ func (g *hooksRPCClient) UserHasBeenCreated(c *Context, user *model.User) {
 
 }
 
-func (s *hooksRPCServer) UserHasBeenCreated(args *Z_UserHasBeenCreatedArgs, returns *Z_UserHasBeenCreatedReturns) error {
+func (s *HooksRPCServer) UserHasBeenCreated(args *Z_UserHasBeenCreatedArgs, returns *Z_UserHasBeenCreatedReturns) error {
 	if hook, ok := s.impl.(interface {
 		UserHasBeenCreated(c *Context, user *model.User)
 	}); ok {
@@ -179,7 +179,7 @@ func (g *hooksRPCClient) UserWillLogIn(c *Context, user *model.User) string {
 	return _returns.A
 }
 
-func (s *hooksRPCServer) UserWillLogIn(args *Z_UserWillLogInArgs, returns *Z_UserWillLogInReturns) error {
+func (s *HooksRPCServer) UserWillLogIn(args *Z_UserWillLogInArgs, returns *Z_UserWillLogInReturns) error {
 	if hook, ok := s.impl.(interface {
 		UserWillLogIn(c *Context, user *model.User) string
 	}); ok {
@@ -214,7 +214,7 @@ func (g *hooksRPCClient) UserHasLoggedIn(c *Context, user *model.User) {
 
 }
 
-func (s *hooksRPCServer) UserHasLoggedIn(args *Z_UserHasLoggedInArgs, returns *Z_UserHasLoggedInReturns) error {
+func (s *HooksRPCServer) UserHasLoggedIn(args *Z_UserHasLoggedInArgs, returns *Z_UserHasLoggedInReturns) error {
 	if hook, ok := s.impl.(interface {
 		UserHasLoggedIn(c *Context, user *model.User)
 	}); ok {
@@ -249,7 +249,7 @@ func (g *hooksRPCClient) MessageHasBeenPosted(c *Context, post *model.Post) {
 
 }
 
-func (s *hooksRPCServer) MessageHasBeenPosted(args *Z_MessageHasBeenPostedArgs, returns *Z_MessageHasBeenPostedReturns) error {
+func (s *HooksRPCServer) MessageHasBeenPosted(args *Z_MessageHasBeenPostedArgs, returns *Z_MessageHasBeenPostedReturns) error {
 	if hook, ok := s.impl.(interface {
 		MessageHasBeenPosted(c *Context, post *model.Post)
 	}); ok {
@@ -285,7 +285,7 @@ func (g *hooksRPCClient) MessageHasBeenUpdated(c *Context, newPost, oldPost *mod
 
 }
 
-func (s *hooksRPCServer) MessageHasBeenUpdated(args *Z_MessageHasBeenUpdatedArgs, returns *Z_MessageHasBeenUpdatedReturns) error {
+func (s *HooksRPCServer) MessageHasBeenUpdated(args *Z_MessageHasBeenUpdatedArgs, returns *Z_MessageHasBeenUpdatedReturns) error {
 	if hook, ok := s.impl.(interface {
 		MessageHasBeenUpdated(c *Context, newPost, oldPost *model.Post)
 	}); ok {
@@ -320,7 +320,7 @@ func (g *hooksRPCClient) ChannelHasBeenCreated(c *Context, channel *model.Channe
 
 }
 
-func (s *hooksRPCServer) ChannelHasBeenCreated(args *Z_ChannelHasBeenCreatedArgs, returns *Z_ChannelHasBeenCreatedReturns) error {
+func (s *HooksRPCServer) ChannelHasBeenCreated(args *Z_ChannelHasBeenCreatedArgs, returns *Z_ChannelHasBeenCreatedReturns) error {
 	if hook, ok := s.impl.(interface {
 		ChannelHasBeenCreated(c *Context, channel *model.Channel)
 	}); ok {
@@ -356,7 +356,7 @@ func (g *hooksRPCClient) UserHasJoinedChannel(c *Context, channelMember *model.C
 
 }
 
-func (s *hooksRPCServer) UserHasJoinedChannel(args *Z_UserHasJoinedChannelArgs, returns *Z_UserHasJoinedChannelReturns) error {
+func (s *HooksRPCServer) UserHasJoinedChannel(args *Z_UserHasJoinedChannelArgs, returns *Z_UserHasJoinedChannelReturns) error {
 	if hook, ok := s.impl.(interface {
 		UserHasJoinedChannel(c *Context, channelMember *model.ChannelMember, actor *model.User)
 	}); ok {
@@ -392,7 +392,7 @@ func (g *hooksRPCClient) UserHasLeftChannel(c *Context, channelMember *model.Cha
 
 }
 
-func (s *hooksRPCServer) UserHasLeftChannel(args *Z_UserHasLeftChannelArgs, returns *Z_UserHasLeftChannelReturns) error {
+func (s *HooksRPCServer) UserHasLeftChannel(args *Z_UserHasLeftChannelArgs, returns *Z_UserHasLeftChannelReturns) error {
 	if hook, ok := s.impl.(interface {
 		UserHasLeftChannel(c *Context, channelMember *model.ChannelMember, actor *model.User)
 	}); ok {
@@ -428,7 +428,7 @@ func (g *hooksRPCClient) UserHasJoinedTeam(c *Context, teamMember *model.TeamMem
 
 }
 
-func (s *hooksRPCServer) UserHasJoinedTeam(args *Z_UserHasJoinedTeamArgs, returns *Z_UserHasJoinedTeamReturns) error {
+func (s *HooksRPCServer) UserHasJoinedTeam(args *Z_UserHasJoinedTeamArgs, returns *Z_UserHasJoinedTeamReturns) error {
 	if hook, ok := s.impl.(interface {
 		UserHasJoinedTeam(c *Context, teamMember *model.TeamMember, actor *model.User)
 	}); ok {
@@ -464,7 +464,7 @@ func (g *hooksRPCClient) UserHasLeftTeam(c *Context, teamMember *model.TeamMembe
 
 }
 
-func (s *hooksRPCServer) UserHasLeftTeam(args *Z_UserHasLeftTeamArgs, returns *Z_UserHasLeftTeamReturns) error {
+func (s *HooksRPCServer) UserHasLeftTeam(args *Z_UserHasLeftTeamArgs, returns *Z_UserHasLeftTeamReturns) error {
 	if hook, ok := s.impl.(interface {
 		UserHasLeftTeam(c *Context, teamMember *model.TeamMember, actor *model.User)
 	}); ok {

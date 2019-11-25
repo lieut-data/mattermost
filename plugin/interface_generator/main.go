@@ -269,7 +269,7 @@ func (g *hooksRPCClient) {{.Name}}{{funcStyle .Params}} {{funcStyle .Return}} {
 	{{ if .Return }} return {{destruct "_returns." .Return}} {{ end }}
 }
 
-func (s *hooksRPCServer) {{.Name}}(args *{{.Name | obscure}}Args, returns *{{.Name | obscure}}Returns) error {
+func (s *HooksRPCServer) {{.Name}}(args *{{.Name | obscure}}Args, returns *{{.Name | obscure}}Returns) error {
 	if hook, ok := s.impl.(interface {
 		{{.Name}}{{funcStyle .Params}} {{funcStyle .Return}}
 	}); ok {

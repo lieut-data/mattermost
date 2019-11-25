@@ -31,7 +31,7 @@ func ClientMain(pluginImplementation interface{}) {
 	}
 
 	plugin.Serve(&plugin.ServeConfig{
-		HandshakeConfig: handshake,
+		HandshakeConfig: Handshake,
 		Plugins:         pluginMap,
 	})
 }

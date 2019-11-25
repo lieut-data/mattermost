@@ -57,7 +57,7 @@ func newSupervisor(pluginInfo *model.BundleInfo, parentLogger *mlog.Logger, apiI
 	cmd := exec.Command(executable)
 
 	sup.client = plugin.NewClient(&plugin.ClientConfig{
-		HandshakeConfig: handshake,
+		HandshakeConfig: Handshake,
 		Plugins:         pluginMap,
 		Cmd:             cmd,
 		SyncStdout:      wrappedLogger.With(mlog.String("source", "plugin_stdout")).StdLogWriter(),
